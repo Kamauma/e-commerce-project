@@ -21,3 +21,12 @@ def login_view(request):
         else:
             return render(request, 'accounts/login.html', {'error': 'Invalid credentials'})
     return render(request, 'accounts/login.html')
+
+#product.html
+
+from .models import Product
+
+def product_list(request):
+    product = Product.objects.all()
+    return render(request, 'accounts/product.html', {'product': product})
+
