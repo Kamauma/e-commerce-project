@@ -1,8 +1,6 @@
-# views.py
-
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from .models import Product
 
@@ -10,30 +8,31 @@ from .models import Product
 def home(request):
     return render(request, 'accounts/home.html')
 
-
-# Login page
+#Login
 def login_view(request):
     if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
+        email = request.POST.get('email')  # now matches login form
+        password = request.POST.get('password')
 
-        user = authenticate(request, username=username, password=password)
+        # Check if a user with that email exists
+        try:
+            user_obj = User.objects.get(email=email)
+        except User.DoesNotExist:
+            return render(request, 'accounts/login.html', {'error': 'Invalid email or password'})
 
-        if user is not None:
+        # Authenticate using the username found by email
+        user = authenticate(request, username=user_obj.username, password=password)
+
+        if user:
             login(request, user)
-            return redirect('/')  
+            return redirect('product_list')  # SUCCESS
         else:
-            return render(request, 'accounts/login.html', {'error': 'Invalid credentials'})
+            return render(request, 'accounts/login.html', {'error': 'Invalid email or password'})
+
     return render(request, 'accounts/login.html')
 
 
-# Product page
-def product_list(request):
-    products = Product.objects.all()
-    return render(request, 'accounts/product.html', {'product': products})
-
-
-# Signup page
+# SIGNUP
 def signup_view(request):
     if request.method == "POST":
         email = request.POST.get("email")
@@ -41,7 +40,7 @@ def signup_view(request):
         password1 = request.POST.get("password1")
         password2 = request.POST.get("password2")
 
-        # Basic validations
+        # Validations
         if password1 != password2:
             return render(request, "accounts/signup.html", {"error": "Passwords do not match."})
 
@@ -55,8 +54,22 @@ def signup_view(request):
         user = User.objects.create_user(username=username, email=email, password=password1)
         user.save()
 
-        # Redirect to login page after successful signup
         messages.success(request, "Account created successfully! Please log in.")
-        return redirect("login")  # 'login' should be the name of your login URL pattern
+        return redirect("login")
 
     return render(request, "accounts/signup.html")
+
+
+# PRODUCT LIST (requires login)
+def product_list(request):
+    if not request.user.is_authenticated:
+        return redirect('login')
+
+    products = Product.objects.all()
+    return render(request, 'accounts/product.html', {'products': products})
+
+
+# LOGOUT
+def logout_view(request):
+    logout(request)
+    return redirect('login')
