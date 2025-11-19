@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
+from .models import Product
 
 # Home page
 def home(request):
@@ -62,6 +63,7 @@ def product_list(request):
     if not request.user.is_authenticated:
         return redirect('login')
     return render(request, 'accounts/product.html')
+
 def phones_list(request):
     products = Product.objects.filter(category='phones')
     return render(request, 'accounts/phones_list.html', {'products': products})
