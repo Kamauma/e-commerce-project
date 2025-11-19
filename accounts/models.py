@@ -23,7 +23,7 @@ class Product(models.Model):
     price = models.DecimalField(max_digits=8, decimal_places=2)
     stock = models.PositiveIntegerField(default=0)
     category = models.CharField(max_length=20, choices=CATEGORY_CHOICES, default='phones')
-    image = models.ImageField(upload_to='products/', blank=True, null=True)
+    image = models.ImageField(upload_to='products/', blank=True, null=True, default= 'products/placeholder.png')
 
     def __str__(self):
         return self.name
