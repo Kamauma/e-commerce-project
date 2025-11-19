@@ -62,6 +62,13 @@ def product_list(request):
     if not request.user.is_authenticated:
         return redirect('login')
     return render(request, 'accounts/product.html')
+def phones_list(request):
+    products = Product.objects.filter(category='phones')
+    return render(request, 'accounts/phones_list.html', {'products': products})
+
+def appliances_list(request):
+    products = Product.objects.filter(category='appliances')
+    return render(request, 'accounts/appliances_list.html', {'products': products})
 
 # Logout
 def logout_view(request):
