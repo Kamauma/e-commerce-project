@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Home Appliances Available</title>
+
     <style>
         body {
             margin: 0;
@@ -13,108 +14,114 @@
         }
 
         .container {
-            display: flex;
-            width: 100%;
+            width: 90%;
             max-width: 1200px;
-            margin: 40px auto; /* center container */
-            gap: 10px; /* space between boxes */
+            margin: 40px auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
         }
 
-        .category-box {
-            flex: 1; /* both boxes take equal width */
-            height: 70vh; /* taller boxes */
-            border-radius: 10px;
+        .category-card {
+            position: relative;
+            height: 300px;
+            border-radius: 12px;
             overflow: hidden;
             cursor: pointer;
-            position: relative;
+            background: #222;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
-        .category-box:hover {
-            transform: translateY(-5px);
-            box-shadow: 0px 8px 18px rgba(0, 0, 0, 0.2);
+        .category-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0px 12px 20px rgba(0, 0, 0, 0.25);
         }
 
-        .category-box img {
+        .category-card img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            filter: brightness(65%);
+            opacity: 0.72;
+            transition: opacity 0.3s;
+        }
+
+        .category-card:hover img {
+            opacity: 0.55;
         }
 
         .category-title {
             position: absolute;
-            color: white;
-            font-size: 3rem;
-            font-weight: bold;
-            bottom: 20px;
+            bottom: 18px;
             left: 20px;
-            text-shadow: 1px 1px 5px rgba(0,0,0,0.7);
+            right: 20px;
+            color: white;
+            font-size: 1.8rem;
+            font-weight: bold;
+            text-shadow: 0 0 6px rgba(0, 0, 0, 0.8);
+            line-height: 1.2;
         }
 
         a {
             text-decoration: none;
-            flex: 1;
-        }
-
-        /* Responsive: stack vertically on small screens */
-        @media (max-width: 768px) {
-            .container {
-                flex-direction: column;
-            }
-            .category-box {
-                height: 50vh;
-            }
+            color: inherit;
         }
     </style>
 </head>
+
 <body>
+
 <div class="container">
 
-    <!-- Appliances Category -->
-<a href="#">
-    <div class="category-box">
-        <img src="{% static 'accounts/products/homeappliances/4x4Stove.png' %}" alt="Appliances">
-        <div class="category-title">4x4 Stove</div>
-    </div>
-</a>
-<a href="#">
-    <div class="category-box">
-        <img src="{% static 'accounts/products/homeappliances/fridge.png' %}" alt="Appliances">
-        <div class="category-title">Fridge</div>
-    </div>
-</a>
-<a href="#">
-    <div class="category-box">
-        <img src="{% static 'accounts/products/homeappliances/iron.png' %}" alt="Appliances">
-        <div class="category-title">Iron</div>
-    </div>
-</a>
-<a href="#">
-    <div class="category-box">
-        <img src="{% static 'accounts/products/homeappliances/lgTv.png' %}" alt="Appliances">
-        <div class="category-title">LG TV</div>
-    </div>
-</a>
-<a href="#">
-    <div class="category-box">
-        <img src="{% static 'accounts/products/homeappliances/stovetop.png' %}" alt="Appliances">
-        <div class="category-title">5x Contact Stove-top</div>
-    </div>
-</a>
-<a href="#">
-    <div class="category-box">
-        <img src="{% static 'accounts/products/homeappliances/vintageTv.png' %}" alt="Appliances">
-        <div class="category-title">Vintage TV Biege Colour</div>
-    </div>
-</a>
-<a href="#">
-    <div class="category-box">
-        <img src="{% static 'accounts/products/homeappliances/washingMachine.png' %}" alt="Appliances">
-        <div class="category-title">Washing Machine</div>
-    </div>
-</a>
+    <a href="#">
+        <div class="category-card">
+            <img src="{% static 'accounts/products/homeappliances/4x4Stove.png' %}" alt="">
+            <div class="category-title">4x4 Stove</div>
+        </div>
+    </a>
+
+    <a href="#">
+        <div class="category-card">
+            <img src="{% static 'accounts/products/homeappliances/fridge.png' %}" alt="">
+            <div class="category-title">Fridge</div>
+        </div>
+    </a>
+
+    <a href="#">
+        <div class="category-card">
+            <img src="{% static 'accounts/products/homeappliances/iron.png' %}" alt="">
+            <div class="category-title">Iron</div>
+        </div>
+    </a>
+
+    <a href="#">
+        <div class="category-card">
+            <img src="{% static 'accounts/products/homeappliances/lgTv.png' %}" alt="">
+            <div class="category-title">LG TV</div>
+        </div>
+    </a>
+
+    <a href="#">
+        <div class="category-card">
+            <img src="{% static 'accounts/products/homeappliances/stovetop.png' %}" alt="">
+            <div class="category-title">5x Contact Stove-top</div>
+        </div>
+    </a>
+
+    <a href="#">
+        <div class="category-card">
+            <img src="{% static 'accounts/products/homeappliances/vintageTv.png' %}" alt="">
+            <div class="category-title">Vintage TV (Beige)</div>
+        </div>
+    </a>
+
+    <a href="#">
+        <div class="category-card">
+            <img src="{% static 'accounts/products/homeappliances/washingMachine.png' %}" alt="">
+            <div class="category-title">Washing Machine</div>
+        </div>
+    </a>
 
 </div>
+
 </body>
 </html>
